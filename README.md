@@ -61,16 +61,16 @@ The I2C master controller uses a finite state machine (FSM) with **8 states** to
 ## I2C Slave Controller
 
 1. **Start Detection**: 
-- The slave detects the start condition when SDA goes low while SCL is high. This triggers the slave to start listening for the address from the master.
+   - The slave detects the start condition when SDA goes low while SCL is high. This triggers the slave to start listening for the address from the master.
 
-1. **Address Reception**: 
-- The slave enters the **READ_ADDR** state and stores the 7-bit address from the master in the `addr` register.
-- After receiving the address, the slave checks if it matches its own address. If a match is found, the slave sends an ACK in the **SEND_ACK** state.
+2. **Address Reception**: 
+   - The slave enters the **READ_ADDR** state and stores the 7-bit address from the master in the `addr` register.
+   - After receiving the address, the slave checks if it matches its own address. If a match is found, the slave sends an ACK in the **SEND_ACK** state.
 
-1. **Read/write Operations**: 
-- If the master wants to write data, the slave moves to the **READ_DATA** state and captures the data bit by bit on the SDA line.
-- If the master wants to read data, the slave enters the **WRITE_DATA** state and sends the `data_out` register back to the master on the SDA line.
-- After the read or write is complete, the slave sends an ACK in the **SEND_ACK2** state and waits for the next communication cycle.
+3. **Read/write Operations**: 
+   - If the master wants to write data, the slave moves to the **READ_DATA** state and captures the data bit by bit on the SDA line.
+   - If the master wants to read data, the slave enters the **WRITE_DATA** state and sends the `data_out` register back to the master on the SDA line.
+   - After the read or write is complete, the slave sends an ACK in the **SEND_ACK2** state and waits for the next communication cycle.
 
 ## Testbench (`tb.v`)
 
